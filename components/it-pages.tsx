@@ -82,13 +82,6 @@ export function ItCareersPage({ locale }: { locale: Locale }) {
   return (
     <section className={ui.section}>
       <div className={ui.wrap}>
-        <div className={ui.notice}>
-          {t(
-            locale,
-            "受付期間は原サイトに「2026年2月1日以降」と記載されています。現在の募集状況は会社へご確認ください。",
-            "The source lists applications as accepted from February 1, 2026 onward. Please contact the company to confirm current availability.",
-          )}
-        </div>
         <table className={`${ui.table} mt-5`}>
           <tbody>
             {itCareerDetails.map((detail) => (

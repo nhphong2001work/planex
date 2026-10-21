@@ -270,7 +270,7 @@ function Cad({ locale }: {
           <h2>{h}</h2>
           <p className={ui.muted}>{paragraphs[i]}</p>
         </article>)}</div>
-      <p className={`${ui.section} pb-5`}>{paragraphs[4]}</p>
+      <p className={`${ui.notice} mb-5 mt-24`}>{paragraphs[4]}</p>
       <h2 className={ui.sectionTitle}>{t(locale, "保有CAD・CAMソフトウエア", "CAD/CAM software listed on the source site")}</h2>
       <table className={ui.table}>
         <tbody>{[["CATIA V5", "7台", "7 systems"], ["Cimatron E", "2台", "2 systems"], ["CADmeister", "9台", "9 systems"], ["Autodesk Inventor", "1台", "1 system"], ["NX", "2台", "2 systems"], ["AutoCAD", "1台", "1 system"]].map(([n, j, e]) =>
@@ -285,7 +285,7 @@ function Cad({ locale }: {
 function Jigs({ locale }: { locale: Locale }) {
   return <section className={ui.section}>
     <div className={ui.wrap}>
-      <p>{t(locale, "治具設計から試作・量産用振動溶着治具・治工具の製作、及び試作品は溶着作業も行っております。", "We design and manufacture prototype and production vibration-welding jigs and tools. Welding work is also available for prototypes.")}</p>
+      <p className={ui.notice}>{t(locale, "治具設計から試作・量産用振動溶着治具・治工具の製作、及び試作品は溶着作業も行っております。", "We design and manufacture prototype and production vibration-welding jigs and tools. Welding work is also available for prototypes.")}</p>
       <h2 className={`${ui.sectionTitle} mt-11`}>{t(locale, "振動溶着治具", "Vibration-welding jigs")}</h2>
       <p>{t(locale, "振動溶着治具は、プラスチック製品の成形後の組立工程で使用されます。製品を受けて接合させる振動溶着機に、当社内製治具と製品をセットし、加圧しながら振動させます。摩擦熱で樹脂を溶かして接合する工法です。", "Vibration-welding jigs are used to assemble plastic products after molding. The product and in-house jig are placed in a vibration-welding machine. Pressure and vibration generate frictional heat that melts and joins the resin.")}</p>
       <p>{t(locale, "当社では主に振動溶着治具を設計・製造しています。", "Planex primarily designs and manufactures vibration-welding jigs.")}</p>
@@ -312,7 +312,7 @@ function Engineers({ locale }: {
   const ja = locale === "ja"; const list = ja ? ["豊富な経験と実績: 経験と実績に基づき、お客様のニーズに的確に応えます。", "全国各地に多種多様な職種の人材を迅速にご提供いたします。", "高い専門性: 製造現場に関する深い知識と経験を持つスタッフが常駐しております。"] : ["Extensive experience: We respond to customer needs based on experience and track record.", "We provide people across a range of roles throughout Japan.", "Specialist knowledge: Staff have deep knowledge and experience in manufacturing operations."]; return <section className={ui.section}>
     <div className={ui.wrap}>
       <h2 className={ui.sectionTitle}>{t(locale, "製造業の人材不足にお困りではありませんか？", "Facing a staffing shortage in manufacturing?")}</h2>
-      <p className={ui.muted}>{t(locale, "製造現場に必要なあらゆる人材を派遣いたします。お客様のニーズに合わせた最適な人材をご提案し、製造現場の課題解決と事業発展をサポートいたします。", "We dispatch personnel for manufacturing operations and propose candidates suited to your needs, supporting the resolution of operational challenges and business development.")}</p>
+      <p className={ui.notice}>{t(locale, "製造現場に必要なあらゆる人材を派遣いたします。お客様のニーズに合わせた最適な人材をご提案し、製造現場の課題解決と事業発展をサポートいたします。", "We dispatch personnel for manufacturing operations and propose candidates suited to your needs, supporting the resolution of operational challenges and business development.")}</p>
       <div className={`${ui.grid3} mt-8`}>{list.map((x, i) =>
         <div className={ui.card} key={i}>
           <div className={ui.eyebrow}>0{i + 1}</div>
@@ -340,7 +340,7 @@ function Mold({ locale }: {
             <span className={ui.serviceNum}>0{i + 1}</span>
             <p>{p}</p>
           </div>)}</div>
-      </section>)}<p className={ui.notice}>{t(locale, "※能力・実績・数値は原サイト掲載内容です。公開前に最新情報をご確認ください。", "Figures and capabilities reflect the source site and should be verified before publication.")}</p>
+      </section>)}
     </div>
   </section>;
 }
@@ -361,7 +361,6 @@ function Company({ locale }: {
             <td>{ja ? j : e}</td>
           </tr>)}</tbody>
       </table>
-      <p className={`${ui.notice} mt-6`}>{t(locale, "会社情報（資本金・売上高・代表者等）は原サイト掲載内容です。公開前に最新情報をご確認ください。", "Company details such as capital, sales and leadership are reproduced from the source site; verify before publication.")}</p>
     </div>
   </section>;
 }
@@ -374,7 +373,6 @@ function Careers({ locale }: {
     string
   ][] = [["業務内容", "CAD/CAM設計者・自動車部品設計", "CAD/CAM designer · automotive parts design"], ["要件", "CAD/CAMに多少の知識があればなお可。但し、無くても可。", "Some CAD/CAM knowledge preferred, but not required."], ["勤務時間", "平日 8:30～17:30", "Weekdays, 8:30–17:30"], ["勤務地", "前橋事業本部・秋田事業所", "Maebashi business office · Akita office"], ["休日", "土曜日・日曜日 ※第1土曜有給奨励／ゴールデンウィーク、お盆、年末年始", "Saturday and Sunday (paid leave encouraged on first Saturday); Golden Week, summer and year-end holidays."], ["給与（現行・見込）", "月給：基本給180,000円、住宅手当20,000円、食事手当8,000円、精勤手当5,000円、残業手当（残業時間に応じて支払い）。合計213,000円。", "Monthly: base ¥180,000; housing ¥20,000; meal ¥8,000; attendance ¥5,000; overtime paid according to hours. Total ¥213,000."], ["交通費", "ガソリン券支給", "Gasoline vouchers provided."], ["加入保険", "健康・厚生・雇用・労災", "Health, employees’ pension, employment and workers’ compensation insurance."], ["退職金制度", "有り", "Available."], ["応募・選考要領", "応募書類：履歴書・卒業見込証明書／選考方法：面接／受付期間：2026年2月1日以降", "Documents: résumé and expected-graduation certificate. Selection: interview. Applications accepted from February 1, 2026."]]; const english: Record<string, string> = { 業務内容: "Responsibilities", 要件: "Qualifications", 勤務時間: "Working hours", 勤務地: "Location", 休日: "Days off", "給与（現行・見込）": "Compensation", 交通費: "Transport", 加入保険: "Insurance", 退職金制度: "Retirement benefit", "応募・選考要領": "Application and selection" }; return <section className={ui.section}>
     <div className={ui.wrap}>
-      <p className={ui.notice}>{t(locale, "以下は原サイトの募集要項です。受付開始日が過去となっているため、現在の募集状況・条件を会社へ確認してください。", "The source lists the following vacancy. Its application date has passed; confirm current vacancies and terms with the company.")}</p>
       <table className={`${ui.table} mt-5`}>
         <tbody>{rows.map(([a, b, c]) =>
           <tr key={a}>
@@ -396,8 +394,7 @@ function History({ locale }: {
       <div>
         <div className={ui.eyebrow}>OUR HISTORY</div>
         <h2 className={ui.sectionTitle}>{t(locale, "創業と設立", "Founding and establishment")}</h2>
-        <p>{t(locale, "株式会社プラネックスは昭和31年に創業。当初は「内山商会」として始まり、その後有限会社となり「東協工業有限会社」に改称しました。", "Planex was founded in 1956 as Uchiyama Shokai. It later became a limited company and was renamed Tōkyō Kōgyō Yūgen Kaisha (東協工業有限会社).")}</p>
-        <div className={ui.notice}>{t(locale, "沿革ページ本文は原サイトで1988年以降の説明と年表の表示範囲が不完全でした。以下の年表はサイトに掲載された確認可能な項目と仕様書記載の情報を整理しています。", "The source history page showed incomplete timeline details. Entries below reflect the source text that could be verified and the supplied audit specification.")}</div>
+        <p className={ui.notice}>{t(locale, "株式会社プラネックスは昭和31年に創業。当初は「内山商会」として始まり、その後有限会社となり「東協工業有限会社」に改称しました。", "Planex was founded in 1956 as Uchiyama Shokai. It later became a limited company and was renamed Tōkyō Kōgyō Yūgen Kaisha (東協工業有限会社).")}</p>
         <div className={`${ui.card} mt-6`}>
           <h3>{t(locale, "グループ各社の役割", "Group locations and roles")}</h3>
           <p>{t(locale, "株式会社プラネックス前橋事業本部：射出成形用簡易型の製作、成形、治工具の設計製作。", "Planex Maebashi: prototype injection molds, molding, and jig/tool design and production.")}</p>
@@ -421,7 +418,7 @@ function News({ locale }: {
 }) {
   const ja = locale === "ja"; return <section className={ui.section}>
     <div className={ui.wrap}>
-      <div className={ui.notice}>{t(locale, "原サイトに掲載されていたお知らせを掲載しています。日付・休暇予定は過去または将来の内容を含むため、最新情報をご確認ください。", "These notices were listed on the source site. Dates include past and future schedules; verify the latest information.")}</div>{newsItems.map((n, index) =>
+      {newsItems.map((n, index) =>
         <article className={ui.newsRow} key={n.date}>
           <span className={ui.muted}>{ja ? n.date : n.dateEn}</span>
           <div>
