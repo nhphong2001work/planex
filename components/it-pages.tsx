@@ -23,7 +23,6 @@ return (
       <figcaption className={ui.homeCaption}>{t(locale, "ネットワークケーブル", "Network cable")}</figcaption>
       </figure>
     </div>
-  <p className={ui.muted}>1/2</p>
     <h2 className={`${ui.sectionTitle} mb-6 mt-4 text-3xl`}>
       {t(locale, "株式会社プラネックスは、ITで未来を切り開く企業です。", "Planex is a company opening up the future through IT.")}
     </h2>

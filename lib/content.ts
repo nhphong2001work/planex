@@ -47,7 +47,7 @@ export const nav: {
     children?: PageKey[];
 }[] = [
     { key: "home", ja: "ホーム", en: "Home" },
-    { key: "business", ja: "事業内容", en: "Services", children: ["cad", "jigs-service", "engineers", "mold"] },
+    { key: "business", ja: "事業内容", en: "Services", children: ["cad", "jigs-service", "engineers", "mold", "it-service"] },
     { key: "products", ja: "製品紹介", en: "Products", children: ["injection-products", "welded-products", "jigs-products"] },
     { key: "company", ja: "会社概要", en: "Company" },
     { key: "history", ja: "沿革", en: "History" },
@@ -74,7 +74,7 @@ export const navLabels: Record<PageKey, { ja: string; en: string }> = {
     apply: { ja: "求人応募 一般", en: "General Job Application" },
     news: { ja: "お知らせ", en: "News" },
     "it-home": { ja: "ホーム IT関連", en: "Home · IT-related" },
-    "it-service": { ja: "アプリ開発・ITエンジニアの派遣業務", en: "Application Development and IT Engineer Staffing" },
+    "it-service": { ja: "アプリ開発・ITエンジニアの派遣業務（株式会社プラネックス技研）", en: "Application Development and IT Engineer Staffing (Planex Giken)" },
 };
 export const titles: Record<PageKey, {
     ja: string;
