@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-ink: #172b3a;
+  --color-muted: #687782;
+  --color-navy: #102d42;
+  --color-blue: #216786;
+  --color-line: #dce5e9;
+  --color-paper: #f5f7f6;
+  --color-mint: #e5efec;
+  --font-japanese: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --animate-image-reveal: image-reveal .7s cubic-bezier(.2,.7,.2,1) both;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes image-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    @apply font-black;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  img {
+    @apply block h-auto max-w-full;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-sky-600 outline-offset-2;
+  }
 }
