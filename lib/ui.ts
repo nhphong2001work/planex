@@ -16,7 +16,7 @@ export const ui = {
   siteHeader: "sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur-xl",
   headerInner: "mx-auto flex min-h-20 w-[min(1480px,calc(100%_-_48px))] items-center gap-4 max-[1100px]:min-h-20 max-[760px]:min-h-[72px] max-[760px]:w-[min(100%_-_36px,560px)] max-[760px]:gap-3 max-[360px]:w-[calc(100%_-_28px)] max-[360px]:gap-2",
   brand: "flex min-w-0 flex-none items-center gap-3 max-[1100px]:min-w-0",
-  headerLogo: "block h-auto w-[155px] max-w-full object-contain max-[760px]:w-[145px] max-[360px]:w-[135px]",
+  headerLogo: "block h-auto w-[135px] max-w-full object-contain max-[760px]:w-[125px] max-[360px]:w-[115px]",
   nav: "ml-auto flex min-w-0 flex-1 items-center justify-end gap-[clamp(8px,.8vw,14px)] text-base max-[1100px]:hidden",
   navGroup: "relative flex-none",
   navLink: "block whitespace-nowrap px-2 py-2 text-base text-[#374151] transition-colors hover:bg-paper hover:text-blue motion-reduce:transition-none",
