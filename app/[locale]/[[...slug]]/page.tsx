@@ -4,9 +4,11 @@ import { notFound } from "next/navigation";
 import { LayoutFrame, PageHeading } from "@/components/site";
 import { EmailForm } from "@/components/forms";
 import { HomePage } from "@/components/home";
-import { paths, titles, seoDescriptions, serviceCards, newsItems, type Locale, type PageKey, t } from "@/lib/content";
+import { LocationMap } from "@/components/location-map";
+import { HistoryTimeline } from "@/components/history-timeline";
+import { companyLocation, paths, titles, seoDescriptions, serviceCards, newsItems, type Locale, type PageKey, t } from "@/lib/content";
 import Link from "next/link";
-import { ProductCategoryGallery, InjectionProductsPage, VibrationProductImage, CadCamImage } from "@/components/galleries";
+import { ProductCategoryGallery, InjectionProductsPage, InjectionMoldServiceGallery, VibrationProductImage, CadCamImage, PhotoPlaceholder } from "@/components/galleries";
 import { ItCareersPage, ItHomePage, ItServicePage } from "@/components/it-pages";
 import { isLocale, localizedPath } from "@/lib/i18n";
 import { ui } from "@/lib/ui";
@@ -66,6 +68,7 @@ const socialImages: Partial<Record<PageKey, {
   },
 };
 function url(locale: Locale, key: PageKey) { return localizedPath(locale, paths[key]); }
+
 export const instant = false;
 export function generateStaticParams() { return (["ja", "en"] as Locale[]).flatMap(locale => keys.map(key => ({ locale, slug: paths[key] ? paths[key].split("/") : [] }))); }
 export async function generateMetadata({ params }: {
@@ -184,71 +187,78 @@ function PageContent({ locale, page }: {
     case "injection-products": return <InjectionProductsPage locale={locale} />;
     case "welded-products": return <section className={ui.section}>
       <div className={ui.wrap}>
-        <p>{t(locale, "エンジンのインテークマニホールド、エアークリーナー、グローブボックやスポイラー等、\n振動溶着を必要とする自動車部品は増加傾向にあります。\n製品のデータを基に振動溶着機で溶着作業まで一貫して行っております。", "Automotive components requiring vibration welding, such as engine intake manifolds, air cleaners, glove boxes and spoilers, are increasing. Welding is carried out through to the vibration-welding machine process based on product data.")}</p>
+        <p className={ui.muted}>{t(locale, "エンジンのインテークマニホールド、エアークリーナー、グローブボックやスポイラー等、\n振動溶着を必要とする自動車部品は増加傾向にあります。\n製品のデータを基に振動溶着機で溶着作業まで一貫して行っております。", "Automotive components requiring vibration welding, such as engine intake manifolds, air cleaners, glove boxes and spoilers, are increasing. Welding is carried out through to the vibration-welding machine process based on product data.")}</p>
         <VibrationProductImage locale={locale} />
       </div>
     </section>;
     case "jigs-products": return <section className={ui.section}>
       <div className={ui.wrap}>
-        <p>{t(locale, "治具設計から試作・量産用振動溶着治具・治工具の製作、及び 試作品は溶着作業も行っております。", "From jig design through production of prototype and production vibration-welding jigs and tools; welding work is also available for prototypes.")}</p>
+        <p className={ui.notice + " mb-4"}>{t(locale, "治具設計から試作・量産用振動溶着治具・治工具の製作、及び 試作品は溶着作業も行っております。", "From jig design through production of prototype and production vibration-welding jigs and tools; welding work is also available for prototypes.")}</p>
         <div className={ui.grid2}>
           <div>
             <h2>{t(locale, "試作用振動溶着治具 UPPER", "Prototype vibration-welding jig UPPER")}</h2>
             <figure className="m-0 min-w-0">
-              <Image
-                src={assets.customerStorySlides[0]}
-                alt={t(locale, "製造現場での加工の様子", "Machining work on the production floor")}
-                width={1536}
-                height={820}
-                unoptimized
-                className="h-auto w-full"
-              />
-              <figcaption className={ui.galleryCaption}>{t(locale, "製造現場での加工の様子", "Machining work on the production floor")}</figcaption>
+              <PhotoPlaceholder locale={locale} className="aspect-[1.875/1] w-full" />
             </figure>
           </div>
           <div>
             <h2>{t(locale, "試作用振動溶着治具 LOWER", "Prototype vibration-welding jig LOWER")}</h2>
             <figure className="m-0 min-w-0">
-              <Image
-                src={assets.customerStorySlides[1]}
-                alt={t(locale, "製造工程で使用する切削工具", "Cutting tool used in the manufacturing process")}
-                width={720}
-                height={384}
-                unoptimized
-                className="h-auto w-full"
-              />
-              <figcaption className={ui.galleryCaption}>{t(locale, "製造工程で使用する切削工具", "Cutting tool used in the manufacturing process")}</figcaption>
+              <PhotoPlaceholder locale={locale} className="aspect-[1.875/1] w-full" />
             </figure>
           </div>
         </div>
       </div>
     </section>;
-    case "company": return <Company locale={locale} />;
+    case "company": return <div className={ui.wrap}>
+      <Company locale={locale} />
+      <LocationMap locale={locale} />
+    </div>;
+
     case "history": return <History locale={locale} />;
     case "contact": return <section className={ui.section}>
-      <div className={`${ui.wrap} ${ui.grid2}`}>
-        <div>
-          <div className={ui.eyebrow}>CONTACT</div>
-          <h2 className={ui.sectionTitle}>{titles.contact[locale]}</h2>
-          <div className={ui.card}>
-            <h3>{t(locale, "株式会社プラネックス 前橋工場", "Planex — Maebashi Factory")}</h3>
-            <p>{t(locale, "金型製作・治具製作・射出成形・CAD/CAM請負・人材派遣・", "Moldmaking · jig production · injection molding · CAD/CAM outsourcing · staffing")}</p>
-            <p>〒371-0122<br />{t(locale, "群馬県前橋市小坂子町922-4（東部芳賀工業団地内）", "922-4 Kosako-machi, Maebashi, Gunma 371-0122, Japan")}</p>
-            <Link href={url(locale, "home")}>{t(locale, "ホームページ", "Website")}</Link>{"　|　"}
-            <a href="https://www.google.com/maps/search/?api=1&query=群馬県前橋市小坂子町922-4" target="_blank" rel="noreferrer">{t(locale, "アクセス", "Directions")} ↗</a>
+      <div className={ui.wrap}>
+        <div className={ui.grid2}>
+          <div className="max-lg:hidden">
+            <div className={ui.eyebrow}>CONTACT</div>
+            <h2 className={ui.sectionTitle}>{t(locale, "お問い合わせ先", "Contact information")}</h2>
+            <div className={ui.card}>
+              <h3>{companyLocation.name[locale]}</h3>
+              <p>{t(locale, "金型・治具製作、射出成形、CAD/CAM受託、人材派遣", "Mold and jig production, injection molding, CAD/CAM outsourcing, and staffing")}</p>
+              <p>{t(locale, "〒371-0122", "〒371-0122")}<br />{companyLocation.address[locale].replace(/^〒371-0122\s*/, "")}</p>
+              <div className="mt-5 border-t border-line pt-4">
+                <p className="m-0 text-sm font-bold text-muted">{t(locale, "電話番号", "Phone")}</p>
+                <a className="mt-1 block text-lg font-bold text-navy hover:text-blue" href="tel:0272696321">027-269-6321</a>
+              </div>
+              <div className="mt-4 border-t border-line pt-4">
+                <p className="m-0 text-sm font-bold text-muted">{t(locale, "メールアドレス", "Email")}</p>
+                <a className="mt-1 block break-all text-lg font-bold text-navy hover:text-blue" href="mailto:planex@mx7.mesh.ne.jp">planex@mx7.mesh.ne.jp</a>
+              </div>
+              <p className="mb-0 mt-5">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE%E3%83%97%E3%83%A9%E3%83%8D%E3%83%83%E3%82%AF%E3%82%B9%E5%89%8D%E6%A9%8B%E5%B7%A5%E5%A0%B4" 
+                target="_blank" rel="noreferrer">{t(locale, "Googleマップで所在地を確認", "View location on Google Maps")} ↗</a>
+              </p>
+            </div>
           </div>
-          <p>
-            <a href="tel:0272696321">027-269-6321</a>
-            <br />
-            <a href="mailto:planex@mx7.mesh.ne.jp">planex@mx7.mesh.ne.jp</a>
-          </p>
+          <div>
+            <div className={ui.eyebrow}>CONTACT FORM</div>
+            <h2 className={ui.sectionTitle}>{t(locale, "お問い合わせフォーム", "Enquiry form")}</h2>
+            <p className={ui.muted + " mb-3"}>{t(locale, "ご相談・お見積もりのご依頼など、お気軽にお問い合わせください。", "Please feel free to contact us with questions or quotation requests.")}</p>
+            <EmailForm kind="contact" locale={locale} />
+          </div>
         </div>
-        <EmailForm kind="contact" locale={locale} />
       </div>
     </section>;
     case "apply": return <section className={ui.section}>
       <div className={ui.wrap}>
-        <p className={ui.muted}>{titles.apply[locale]}</p>
+        <h2 className={ui.sectionTitle}>{t(locale, "エントリー・採用に関するお問い合わせ", "Applications and recruitment enquiries")}</h2>
+        <p className={ui.muted}>
+          {t(
+            locale,
+            "ご応募や採用に関するご質問は、以下のフォームよりお送りください。内容を確認のうえ、担当者よりご連絡いたします。",
+            "Please use the form below to apply or ask questions about recruitment. Our team will review your message and get back to you.",
+          )}
+        </p>
         <EmailForm kind="apply" locale={locale} />
       </div>
     </section>;
@@ -287,14 +297,14 @@ function Jigs({ locale }: { locale: Locale }) {
     <div className={ui.wrap}>
       <p className={ui.notice}>{t(locale, "治具設計から試作・量産用振動溶着治具・治工具の製作、及び試作品は溶着作業も行っております。", "We design and manufacture prototype and production vibration-welding jigs and tools. Welding work is also available for prototypes.")}</p>
       <h2 className={`${ui.sectionTitle} mt-11`}>{t(locale, "振動溶着治具", "Vibration-welding jigs")}</h2>
-      <p>{t(locale, "振動溶着治具は、プラスチック製品の成形後の組立工程で使用されます。製品を受けて接合させる振動溶着機に、当社内製治具と製品をセットし、加圧しながら振動させます。摩擦熱で樹脂を溶かして接合する工法です。", "Vibration-welding jigs are used to assemble plastic products after molding. The product and in-house jig are placed in a vibration-welding machine. Pressure and vibration generate frictional heat that melts and joins the resin.")}</p>
-      <p>{t(locale, "当社では主に振動溶着治具を設計・製造しています。", "Planex primarily designs and manufactures vibration-welding jigs.")}</p>
+      <p>{t(locale, "振動溶着治具は、プラスチック製品の成型工程後の製品組立工程で使用されます。製品と製品の受けを作って接合させる「振動溶着機」と呼ばれる機械に、当社内製治具と製品をセットし、機械が製品に加圧をかけ、治具と製品を振動させます。これによって生じた摩擦熱が樹脂を溶かして接合する工法です。", "Vibration-welding jigs are used to assemble plastic products after molding. The jig and product are placed in a machine called a vibration welder, which supports and joins the parts. The machine applies pressure to the product and vibrates the jig and product. The resulting frictional heat melts the resin and bonds the parts.")}</p>
+      <p>{t(locale, "当社では、その中でも主に「振動溶着治具」を設計・製造しています。振動溶着治具は、プラスチック部品同士を効率的に接合するための重要なツールです。以下に詳細を説明します。", "Among these, Planex primarily designs and manufactures vibration-welding jigs. These jigs are essential tools for efficiently joining plastic parts. More details are provided below.")}</p>
       <div className={`${ui.grid3} mt-8`}>{[[t(locale, "役割", "Role"), t(locale, "部品同士を正確に位置合わせし、圧力と振動を加えて接合します。", "Jigs align plastic parts and apply pressure and vibration for joining.")], [t(locale, "設計・製造", "Design and production"), t(locale, "部品の3Dデータをもとに、形状・材質・仕様を考慮して設計します。", "Jigs are designed from 3D part data, taking shape, material and specifications into account.")], [t(locale, "適用分野", "Applications"), t(locale, "自動車、医療、家庭用品、家電、建築部品などで活用されています。", "Applications include automotive, medical, household, appliance and building components.")]].map(([h, b]) =>
         <div className={ui.card} key={h}>
           <h3>{h}</h3>
           <p className={ui.muted}>{b}</p>
         </div>)}</div>
-      <h3 className="mt-10">{t(locale, "振動溶着治具生産実績数（原サイト掲載値）", "Vibration-welding jigs produced (source figures)")}</h3>
+      <h3 className="mt-10">{t(locale, "振動溶着治具生産実績数", "Vibration-welding jigs produced")}</h3>
       <div className={ui.grid2}>
         <div className={ui.card}>
           <strong>30 {t(locale, "台", "units")}</strong>
@@ -319,7 +329,7 @@ function Engineers({ locale }: {
           <p>{x}</p>
         </div>)}</div>
       <h3 className="mt-10">{t(locale, "このようなお客様に", "For customers who")}</h3>
-      <ul>
+      <ul className="mb-4">
         <li>{t(locale, "製造現場の人手不足にお困りのお客様", "Are experiencing staff shortages in manufacturing")}</li>
         <li>{t(locale, "製造現場の課題解決をお考えのお客様", "Are looking to address manufacturing-site challenges")}</li>
       </ul>
@@ -340,27 +350,56 @@ function Mold({ locale }: {
             <p>{p}</p>
           </div>)}</div>
       </section>)}
+      <InjectionMoldServiceGallery locale={locale} />
     </div>
   </section>;
 }
 function Company({ locale }: {
   locale: Locale;
 }) {
-  const ja = locale === "ja"; const rows: [
-    string,
-    string,
-    string
-  ][] = [["社名", "株式会社プラネックス", "Planex"], ["創業", "昭和31年", "Founded 1956"], ["設立", "昭和52年", "Established 1977"], ["資本金", "5千万円", "Capital: ¥50 million"], ["代表取締役社長", "内山 清昭", "President: 内山 清昭"], ["売上高", "10億円", "Sales: ¥1 billion"], ["グループ会社", "株式会社プラネックス技研（日本）／Planex Technology Inc.（Philippines）", "Planex Giken (Japan) / Planex Technology Inc. (Philippines)"], ["事業内容", "簡易型による試作品製作、小ロット製品の製作、量産型・射出成形／各種治工具（振動溶着、熱板溶着、検査治具、測定治具、他）製作／CAD/CAMエンジニア派遣事業・CAD/CAM請負事業／ITエンジニア紹介事業", "Prototype and small-lot production with simplified molds, production molds and injection molding; tooling including vibration-welding, hot-plate welding, inspection and measuring jigs; CAD/CAM engineer staffing and outsourcing; IT engineer placement."], ["所在地", "〒371-0122 群馬県前橋市小坂子町922-4（東部芳賀工業団地内）", "922-4 Kosako-machi, Maebashi, Gunma 371-0122, Japan (Tobu Haga Industrial Park)"], ["電話・FAX", "027-269-6321 / 027-269-6320", "+81-27-269-6321 / +81-27-269-6320"], ["Email", "planex@mx7.mesh.ne.jp", "planex@mx7.mesh.ne.jp"]]; return <section className={ui.section}>
-    <div className={ui.wrap}>
-      <p className={`${ui.muted} mb-7`}>{t(locale, "アプリ開発・派遣　CAD/CAM請負・派遣　簡易金型製作まで商品開発のベストパートナー 株式会社プラネックス・株式会社プラネックス技研", "Application development and staffing, CAD/CAM outsourcing and staffing, prototype moldmaking — Planex and Planex Giken, your product development partner.")}</p>
-      <table className={ui.table}>
-        <tbody>{rows.map(([label, j, e]) =>
-          <tr key={label}>
-            <th>{t(locale, label, ({ 社名: "Company", 創業: "Founded", 設立: "Established", 資本金: "Capital", 代表取締役社長: "President", 売上高: "Sales", グループ会社: "Group companies", 事業内容: "Business activities", 所在地: "Address", "電話・FAX": "Phone / Fax", Email: "Email" } as Record<string, string>)[label])}</th>
-            <td>{ja ? j : e}</td>
-          </tr>)}</tbody>
-      </table>
-    </div>
+  const ja = locale === "ja";
+  const businessItems = {
+    ja: [
+      "簡易型による試作品製作、小ロット製品の製作、量産型・射出成形",
+      "各種治工具（振動溶着、熱板溶着、検査治具、測定治具、他）製作",
+      "CAD/CAMエンジニア派遣事業・CAD/CAM請負事業",
+      "ITエンジニア紹介事業",
+    ],
+    en: [
+      "Prototype and small-lot production using simplified molds, production molds, and injection molding",
+      "Manufacture of tooling, including vibration-welding and hot-plate-welding tools, inspection jigs, and measuring jigs",
+      "CAD/CAM engineer staffing and outsourcing",
+      "IT engineer placement",
+    ],
+  };
+  const rows: [string, string | string[], string | string[]][] = [
+    ["社名", "株式会社プラネックス", "Planex"],
+    ["創業", "昭和31年", "Founded 1956"],
+    ["設立", "昭和52年", "Established 1977"],
+    ["資本金", "5千万円", "Capital: ¥50 million"],
+    ["代表取締役社長", "内山 清昭", "President: 内山 清昭"],
+    ["売上高", "10億円", "Sales: ¥1 billion"],
+    ["グループ会社", "株式会社プラネックス技研（日本）／Planex Technology Inc.（Philippines）", "Planex Giken (Japan) / Planex Technology Inc. (Philippines)"],
+    ["事業内容", businessItems.ja, businessItems.en],
+    // ["所在地", "〒371-0122 群馬県前橋市小坂子町922-4（東部芳賀工業団地内）", "922-4 Kosako-machi, Maebashi, Gunma 371-0122, Japan (Tobu Haga Industrial Park)"],
+    // ["電話・FAX", "027-269-6321 / 027-269-6320", "+81-27-269-6321 / +81-27-269-6320"],
+    // ["Email", "planex@mx7.mesh.ne.jp", "planex@mx7.mesh.ne.jp"],
+  ];
+  return <section className={ui.section}>
+    <p className={`${ui.muted} mb-7`}>{t(locale, "アプリ開発・派遣　CAD/CAM請負・派遣　簡易金型製作まで商品開発のベストパートナー 株式会社プラネックス・株式会社プラネックス技研", "Application development and staffing, CAD/CAM outsourcing and staffing, prototype moldmaking — Planex and Planex Giken, your product development partner.")}</p>
+    <table className={ui.table}>
+      <tbody>{rows.map(([label, j, e]) =>
+        <tr key={label}>
+          <th>{t(locale, label, ({ 社名: "Company", 創業: "Founded", 設立: "Established", 資本金: "Capital", 代表取締役社長: "President", 売上高: "Sales", グループ会社: "Group companies", 事業内容: "Business activities", 所在地: "Address", "電話・FAX": "Phone / Fax", Email: "Email" } as Record<string, string>)[label])}</th>
+          <td>
+            {label === "事業内容" ? (
+              <ul className="list-disc space-y-2 pl-5">
+                {(ja ? businessItems.ja : businessItems.en).map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            ) : ja ? j : e}
+          </td>
+        </tr>)}</tbody>
+    </table>
   </section>;
 }
 function Careers({ locale }: {
@@ -388,26 +427,34 @@ function Careers({ locale }: {
 function History({ locale }: {
   locale: Locale;
 }) {
-  const ja = locale === "ja"; const entries = [["1956", "「内山商会」として創業開始", "Founded as Uchiyama Shokai."], ["1970", "組織を有限会社とし、社名を「東協工業有限会社」と改める", "Incorporated as a limited company and renamed Tōkyō Kōgyō Yūgen Kaisha (東協工業有限会社)."], ["1988", "社名を「株式会社プラネックス」と改め、工場を群馬県前橋市に移転", "Renamed Planex and moved the factory to Maebashi, Gunma."], ["2004", "フィリピンに「Planex Technology, Inc.」を設立", "Established Planex Technology, Inc. in the Philippines."], ["2018", "CAD/CAM部門を分社化し、「株式会社プラネックス技研」を設立", "Spun off the CAD/CAM division and established Planex Giken."]]; return <section className={ui.section}>
+  return <section className={ui.section}>
     <div className={`${ui.wrap} ${ui.grid2}`}>
-      <div>
+      <div className="col-span-2 max-[760px]:col-span-1">
         <div className={ui.eyebrow}>OUR HISTORY</div>
         <h2 className={ui.sectionTitle}>{t(locale, "創業と設立", "Founding and establishment")}</h2>
         <p className={ui.notice}>{t(locale, "株式会社プラネックスは昭和31年に創業。当初は「内山商会」として始まり、その後有限会社となり「東協工業有限会社」に改称しました。", "Planex was founded in 1956 as Uchiyama Shokai. It later became a limited company and was renamed Tōkyō Kōgyō Yūgen Kaisha (東協工業有限会社).")}</p>
-        <div className={`${ui.card} mt-6`}>
-          <h3>{t(locale, "グループ各社の役割", "Group locations and roles")}</h3>
-          <p>{t(locale, "株式会社プラネックス前橋事業本部：射出成形用簡易型の製作、成形、治工具の設計製作。", "Planex Maebashi: prototype injection molds, molding, and jig/tool design and production.")}</p>
-          <p>{t(locale, "株式会社プラネックス技研：CAD/CAMエンジニア派遣・請負。", "Planex Giken: CAD/CAM engineer staffing and outsourcing.")}</p>
-          <p>{t(locale, "Planex Technology, Inc.（Philippines）：CAD/CAM設計支援、エンジニアの教育。", "Planex Technology, Inc. (Philippines): CAD/CAM design support and engineer training.")}</p>
+      </div>
+      <div className="min-w-0">
+        <div className={`${ui.card} mt-6 min-w-0 max-[760px]:p-5`}>
+          <h3 className="mb-2">{t(locale, "主な事業", "Main businesses")}</h3>
+          <ul className="list-disc space-y-2 wrap-break-word pl-5">
+            <li>{t(locale, "簡易型による試作品製作、小ロット製品の製作、量産型・射出成形", "Prototype and small-lot production using simplified molds, production molds, and injection molding")}</li>
+            <li>{t(locale, "各種治工具（振動溶着、熱板溶着、検査治具、測定治具など）の製作", "Manufacture of tooling, including vibration-welding and hot-plate-welding tools, inspection jigs, and measuring jigs")}</li>
+            <li>{t(locale, "CAD/CAMエンジニア派遣事業・CAD/CAM請負事業", "CAD/CAM engineer staffing and outsourcing")}</li>
+          </ul>
+        </div>
+        <div className={`${ui.card} mt-6 min-w-0 max-[760px]:p-5`}>
+          <h3 className="mb-2">{t(locale, "グループ各社の役割", "Group locations and roles")}</h3>
+          <ul className="list-disc space-y-2 wrap-break-word pl-5">
+            <li>{t(locale, "株式会社プラネックス前橋事業本部：射出成形用簡易型の製作、成形、治工具の設計製作。", "Planex Maebashi: prototype injection molds, molding, and jig/tool design and production.")}</li>
+            <li>{t(locale, "株式会社プラネックス技研：CAD/CAMエンジニア派遣・請負。", "Planex Giken: CAD/CAM engineer staffing and outsourcing.")}</li>
+            <li>{t(locale, "Planex Technology, Inc.（Philippines）：CAD/CAM設計支援、エンジニアの教育。", "Planex Technology, Inc. (Philippines): CAD/CAM design support and engineer training.")}</li>
+          </ul>
         </div>
       </div>
-      <div>
+      <div className="min-w-0">
         <h2 className={ui.sectionTitle}>{t(locale, "当社の沿革", "Company timeline")}</h2>
-        <div className={ui.timeline}>{entries.map(([year, j, e]) =>
-          <div className={ui.timelineItem} key={year}>
-            <div className={ui.timelineYear}>{year}</div>
-            <div>{ja ? j : e}</div>
-          </div>)}</div>
+        <HistoryTimeline locale={locale} />
       </div>
     </div>
   </section>;
@@ -430,7 +477,7 @@ function News({ locale }: {
               width={1200}
               height={800}
               unoptimized
-              className="mt-4 aspect-[3/2] h-auto w-full max-w-[460px] object-cover"
+              className="mt-4 aspect-3/2 h-auto w-full max-w-115 object-cover"
             />
           </div>
         </article>)}</div>

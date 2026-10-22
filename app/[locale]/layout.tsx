@@ -40,6 +40,9 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
         },
         description: details.description,
         applicationName: details.brand,
+        icons: {
+            icon: "/images/planex/header-logo.png",
+        },
         alternates: {
             canonical: localizedPath(locale, ""),
             languages: {

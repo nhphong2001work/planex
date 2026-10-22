@@ -5,6 +5,7 @@ import {
   nav,
   navLabels,
   paths,
+  companyLocation,
   tagline,
   titles,
   type Locale,
@@ -134,18 +135,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
                 unoptimized
               />
             </div>
-            <p className={`${ui.muted} ${ui.footerTagline}`}>{tagline[locale]}</p>
+            <p className={`${ui.footerSecondaryText} ${ui.footerTagline}`}>{tagline[locale]}</p>
           </div>
 
           <div>
             <strong className={ui.footerHeading}>{label(locale, "お問い合わせ", "Contact")}</strong>
-            <p className={ui.muted}>
-              〒371-0122<br />
-              {label(
-                locale,
-                "群馬県前橋市小坂子町922-4（東部芳賀工業団地内）",
-                "922-4 Kosako-machi, Maebashi, Gunma 371-0122, Japan (Tobu Haga Industrial Park)",
-              )}
+            <p>
+              {companyLocation.address[locale]}
             </p>
             <p>
               <a href="tel:0272696321">TEL 027-269-6321</a>

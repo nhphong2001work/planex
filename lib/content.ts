@@ -183,6 +183,19 @@ export const tagline = {
     en: "Your product development partner — application development and staffing, CAD/CAM outsourcing and staffing, and prototype moldmaking.",
 };
 
+export const companyLocation = {
+    eyebrow: { ja: "アクセス", en: "ACCESS" },
+    title: { ja: "前橋工場へのアクセス", en: "Visit our Maebashi factory" },
+    name: { ja: "株式会社プラネックス 前橋工場", en: "Planex — Maebashi Factory" },
+    address: {
+        ja: "〒371-0122 群馬県前橋市小坂子町922-4（東部芳賀工業団地内）",
+        en: "922-4 Kosako-machi, Maebashi, Gunma 371-0122, Japan (Tobu Haga Industrial Park)",
+    },
+    directionsLabel: { ja: "Google マップで見る", en: "Open in Google Maps" },
+    directionsUrl: "https://www.google.com/maps/search/?api=1&query=36.4216705%2C139.1096358",
+    mapTitle: { ja: "株式会社プラネックス 前橋工場の地図", en: "Map to Planex Maebashi Factory" },
+};
+
 export const t = (locale: Locale, japanese: string, english: string) =>
   locale === "ja" ? japanese : english;
 export const serviceCards = [
@@ -190,6 +203,7 @@ export const serviceCards = [
     { key: "jigs-service" as const, ja: "振動溶着治具・治工具（株式会社プラネックス）", en: "Vibration-Welding Jigs and Tooling (Planex)", descJa: "振動溶着治具・治工具", descEn: "Vibration-welding jigs and tooling." },
     { key: "engineers" as const, ja: "金型加工機・成形エンジニア人材派遣（株式会社プラネックス技研）", en: "Mold and Molding Engineer Staffing (Planex Giken)", descJa: "金型加工・成形エンジニア 人材派遣", descEn: "Mold and molding engineer staffing." },
     { key: "mold" as const, ja: "射出成形金型（株式会社プラネックス）", en: "Injection Molds (Planex)", descJa: "射出成形金型（簡易金型）", descEn: "Injection molds (prototype molds)." },
+    { key: "it-service" as const, ja: "アプリ開発・ITエンジニア派遣（株式会社プラネックス技研）", en: "Application Development and IT Engineer Staffing (Planex Giken)", descJa: "アプリ開発・ITエンジニアの派遣業務", descEn: "Application development and IT engineer staffing." },
 ];
 export const products = [
     { key: "injection-products" as const, ja: "射出成型品", en: "Injection-Molded Products", labels: ["cover", "インペラ", "クランプ2次成形品", "ケース.jpgの複製", "BOX", "振動溶着品"] },
@@ -298,7 +312,7 @@ export const customerStory = {
     slideAlt: [
         { ja: "製造現場での加工の様子", en: "Machining work on the production floor" },
         { ja: "製造工程で使用する切削工具", en: "Cutting tool used in the manufacturing process" },
-        { ja: "CAD/CAM設計作業の様子", en: "CAD/CAM design work" },
+        { ja: "株式会社プラネックス", en: "Planex" },
     ],
     videoLabel: { ja: "製造現場の動画", en: "Manufacturing video" },
 } as const;

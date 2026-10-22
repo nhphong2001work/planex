@@ -1,6 +1,7 @@
 /** Local copies of images referenced by the original PLANEX website. */
 export const assets = {
     companyLogo: "/images/planex/company-logo.png",
+    companyBuilding: "/images/planex/company.jpeg",
     headerLogo: "/images/planex/header-logo.png",
     planexLogo: "/images/planex/planex-logo.png",
     gikenLogo: "/images/planex/planex-giken-logo.png",
@@ -20,7 +21,7 @@ export const assets = {
     customerStorySlides: [
         "/images/planex/customer-story-slide-01.avif",
         "/images/planex/customer-story-slide-02.avif",
-        "/images/planex/customer-story-slide-03.avif",
+        "/images/planex/company.jpeg",
     ],
     customerStoryVideo: "/images/planex/customer-story-video.mp4",
     newsImages: [

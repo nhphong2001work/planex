@@ -215,14 +215,18 @@ export function EmailForm({ kind, locale }: { kind: FormKind; locale: Locale }) 
       <p className={ui.notice}>
         {kind === "apply"
           ? text(
-              "応募内容は選考のためにEmailJSを通じて送信されます。",
-              "Your application will be sent through EmailJS for recruitment purposes.",
+              "入力内容は、応募への対応および選考のために使用いたします。",
+              "The information you provide will be used to respond to your application and for the selection process.",
             )
           : text(
-              "入力内容はお問い合わせへの回答のためにEmailJSを通じて送信されます。",
-              "Your enquiry will be sent through EmailJS so we can respond.",
+              "入力いただいた情報は、お問い合わせへの回答およびご連絡のために使用いたします。",
+              "The information you provide will be used to respond to your enquiry and contact you.",
             )}
       </p>
+
+      {kind === "apply" && (
+        <h3 className="mb-4 mt-6">{text("応募フォーム", "Application form")}</h3>
+      )}
 
       <label className={ui.consent}>
         <input

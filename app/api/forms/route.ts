@@ -159,14 +159,26 @@ export async function POST(request: Request) {
   });
   const isApplication = kind === "apply";
   const recipientName = `${String(data.get("last") ?? "").trim()} ${String(data.get("first") ?? "").trim()}`.trim();
+  const isEnglish = String(data.get("locale") ?? "ja") === "en";
   autoReplyForm.set("to_email", email);
   autoReplyForm.set("auto_reply_subject", isApplication
     ? "ご応募ありがとうございます"
-    : "お問い合わせありがとうございます");
+    : isEnglish
+      ? "Thank you for contacting Planex"
+      : "お問い合わせありがとうございます");
   const autoReplyMessage = isApplication
     ? "この度は株式会社プラネックスへご応募いただき、誠にありがとうございます。応募内容を確認のうえ、担当者よりご連絡いたします。"
-    : "この度は株式会社プラネックスへお問い合わせいただき、誠にありがとうございます。お問い合わせ内容を確認のうえ、担当者よりご連絡いたします。";
-  const autoReplyDescription = `${recipientName} 様\n\n${autoReplyMessage}\n\nこのメールは自動送信です。`;
+    : isEnglish
+      ? `Dear ${recipientName},\nThank you for contacting Planex Co., Ltd.\nWe have received your enquiry. Our team will review it and get back to you shortly.\nThis is an automated confirmation of receipt of your enquiry.`
+      : `この度は、株式会社プラネックスへお問い合わせいただき、誠にありがとうございます。\nお問い合わせを受け付けました。\n内容を確認のうえ、担当者より改めてご連絡いたします。\nなお、本メールはお問い合わせ受付の自動送信メールです。`;
+  const autoReplyFooter = isEnglish
+    ? "――――――――――――――――\nPlanex Co., Ltd.\nTEL: 027-269-6321\nEmail: planex@mx7.mesh.ne.jp"
+    : "――――――――――――――――\n株式会社プラネックス\nTEL：027-269-6321\nEmail：planex@mx7.mesh.ne.jp";
+  const autoReplyDescription = isApplication
+    ? `${recipientName} 様\n${autoReplyMessage}\nこのメールは自動送信です。\n${autoReplyFooter}`
+    : isEnglish
+      ? `${autoReplyMessage}\n\n${autoReplyFooter}`
+      : `${recipientName} 様\n${autoReplyMessage}\n\n${autoReplyFooter}`;
   autoReplyForm.set("description", autoReplyDescription);
 
   let notificationResult: Awaited<ReturnType<typeof sendEmail>>;
