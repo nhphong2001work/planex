@@ -42,7 +42,7 @@ export const ui = {
   homeCaption: "pt-2 text-base text-muted",
   homeItTitle: "mt-12 text-[clamp(2rem,4vw,3.6rem)] leading-[1.35] tracking-wide text-navy",
   selectionLink: "text-muted underline decoration-line underline-offset-4 hover:text-blue",
-  pageHero: "border-b border-line bg-paper px-0 py-12 max-[760px]:py-10",
+  pageHero: "page-hero border-b border-line bg-paper px-0 py-12 max-[760px]:py-10",
   pageHeroTitle: "my-1 text-[clamp(1.75rem,3.2vw,2.6rem)] leading-[1.35] max-[760px]:text-3xl",
   crumb: "mt-3 text-base text-muted",
   serviceRow: "grid grid-cols-[100px_minmax(0,1fr)_auto] items-center gap-6 border-t border-line py-6 max-[760px]:grid-cols-[52px_minmax(0,1fr)_auto] max-[760px]:gap-3",

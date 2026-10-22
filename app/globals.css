@@ -10,6 +10,7 @@
   --color-mint: #e5efec;
   --font-japanese: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   --animate-image-reveal: image-reveal .7s cubic-bezier(.2,.7,.2,1) both;
+  --animate-drift: drift 12s ease-in-out infinite alternate;
 
   @keyframes image-reveal {
     from {
@@ -19,6 +20,70 @@
     to {
       opacity: 1;
       transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes title-rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes drift {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(-14px, 12px, 0) scale(1.06);
+    }
+  }
+
+  @keyframes content-rise {
+    from {
+      opacity: 0.35;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes text-scroll-reveal {
+    from {
+      opacity: 0.2;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes image-scroll-reveal {
+    from {
+      opacity: 0.55;
+      clip-path: inset(0 5% 0 5%);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0);
+    }
+  }
+
+  @keyframes slider-image-enter {
+    from {
+      opacity: 0.35;
+      transform: translateX(var(--slider-offset)) scale(1.025);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
     }
   }
 }
@@ -45,5 +110,172 @@
 
   :focus-visible {
     @apply outline-2 outline-sky-600 outline-offset-2;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  main > section,
+  main section article,
+  main section figure,
+  main section [class*="grid"] > * {
+    animation: content-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  main :is(h2, h3, h4, p, li, figcaption, th, td) {
+    animation: text-scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  main img {
+    animation: image-scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+
+#service-chooser > div:first-child {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#service-chooser > div:first-child::before {
+  position: absolute;
+  z-index: -1;
+  top: 10%;
+  right: -6rem;
+  width: min(32vw, 24rem);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(255 255 255 / 64%), rgb(255 255 255 / 0%) 70%);
+  content: "";
+  animation: var(--animate-drift);
+  pointer-events: none;
+}
+
+#service-chooser h1,
+.page-hero h1 {
+  animation: title-rise 750ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+#service-chooser li {
+  animation: title-rise 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+#service-chooser li:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+#service-chooser li:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+#service-chooser li:nth-child(4) {
+  animation-delay: 210ms;
+}
+
+header nav a {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+header nav a:hover {
+  transform: translateY(-1px);
+}
+
+main figure img {
+  transition: transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+main figure:hover img {
+  transform: scale(1.025);
+}
+
+.customer-story-slider[data-direction="next"] img {
+  --slider-offset: 2.5%;
+
+  animation: slider-image-enter 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.customer-story-slider[data-direction="previous"] img {
+  --slider-offset: -2.5%;
+
+  animation: slider-image-enter 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+main figure {
+  overflow: hidden;
+}
+
+main figure figcaption {
+  transition: color 200ms ease;
+}
+
+main a[class*="bg-navy"],
+main a[class*="border-line"] {
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+main a[class*="bg-navy"]::after,
+main a[class*="border-line"]::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 25%, rgb(255 255 255 / 18%) 48%, transparent 72%);
+  content: "";
+  transform: translateX(-120%);
+  transition: transform 500ms ease;
+  pointer-events: none;
+}
+
+main a[class*="bg-navy"]:hover::after,
+main a[class*="border-line"]:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  @supports (animation-timeline: view()) {
+    main > section,
+    main section article,
+    main section figure,
+    main section [class*="grid"] > * {
+      animation: none !important;
+    }
+
+    main :is(h2, h3, h4, p, li, figcaption, th, td),
+    main img {
+      animation: none !important;
+    }
+  }
+
+  #service-chooser h1,
+  #service-chooser li,
+  .page-hero h1,
+  #service-chooser > div:first-child::before {
+    animation: none !important;
+  }
+
+  .customer-story-slider img {
+    animation: none !important;
   }
 }

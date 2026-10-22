@@ -13,16 +13,19 @@ const slideSizes = [
 
 export function CustomerStoryMedia({ locale }: { locale: Locale }) {
     const [activeSlide, setActiveSlide] = useState(0);
+    const [slideDirection, setSlideDirection] = useState<"next" | "previous">("next");
     const japanese = locale === "ja";
     useEffect(() => {
         const timer = window.setInterval(() => {
+            setSlideDirection("next");
             setActiveSlide((current) => (current + 1) % assets.customerStorySlides.length);
         }, 5000);
 
         return () => window.clearInterval(timer);
     }, []);
 
-    const moveSlide = (direction: number) => {
+    const moveSlide = (direction: -1 | 1) => {
+        setSlideDirection(direction === 1 ? "next" : "previous");
         setActiveSlide((current) =>
             (current + direction + assets.customerStorySlides.length) %
             assets.customerStorySlides.length,
@@ -32,7 +35,10 @@ export function CustomerStoryMedia({ locale }: { locale: Locale }) {
     return (
         <div className="min-w-0 space-y-6">
             <figure className="m-0">
-                <div className="relative aspect-video overflow-hidden bg-[#e5ebe8]">
+                <div
+                    className="customer-story-slider relative aspect-video overflow-hidden bg-[#e5ebe8]"
+                    data-direction={slideDirection}
+                >
                     <Image
                         key={activeSlide}
                         src={assets.customerStorySlides[activeSlide]}
@@ -40,7 +46,7 @@ export function CustomerStoryMedia({ locale }: { locale: Locale }) {
                         width={slideSizes[activeSlide].width}
                         height={slideSizes[activeSlide].height}
                         unoptimized
-                        className="h-full w-full animate-image-reveal object-cover motion-reduce:animate-none"
+                        className="h-full w-full object-cover"
                     />
                     <button
                         type="button"
